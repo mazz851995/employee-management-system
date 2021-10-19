@@ -75,7 +75,7 @@ const Leaves = () => {
                             <DatePicker required={true} placeholderText="Select Start date" dateFormat="yyyy-MM-dd" showYearDropdown={true} showMonthDropdown={true} minDate={Date.now()} className="form-control" selected={startDate} onChange={(date) => setStartDate(date)} />
                         </div>
                         <div className="col-sm-6">
-                            <DatePicker required={true} placeholderText="Select Start date" dateFormat="yyyy-MM-dd" showYearDropdown={true} showMonthDropdown={true} minDate={startDate} className="form-control" selected={endDate} onChange={(date) => setEndDate(date)} />
+                            <DatePicker required={true} placeholderText="Select End date" dateFormat="yyyy-MM-dd" showYearDropdown={true} showMonthDropdown={true} minDate={startDate} className="form-control" selected={endDate} onChange={(date) => setEndDate(date)} />
                         </div>
                     </div>
                     <br />
