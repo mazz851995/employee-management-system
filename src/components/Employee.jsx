@@ -23,7 +23,6 @@ const Employee = () => {
     const [email, setEmail] = useState("")
     const [mobileNumber, setMobileNumber] = useState("")
     const [dob, setDob] = useState();
-    const [isEdit, setIsEdit] = useState(false)
     const [editId, setEditId] = useState()
     const [filteredLeaves, setFilteredLeaves] = useState([])
 
@@ -33,7 +32,7 @@ const Employee = () => {
 
 
     const resetForm = () => {
-        setFname(""); setLname(""); setEmail(""); setMobileNumber(""); setDob(""); setIsEdit(false);
+        setFname(""); setLname(""); setEmail(""); setMobileNumber(""); setDob(""); setEditId("");
     }
     const openModal = (id) => {
         const leave = allLeaves.filter(ele => ele.empName === id)
@@ -49,7 +48,7 @@ const Employee = () => {
         e.preventDefault();
         var formData = { fname, lname, email, mobileNumber, dob: new Date(dob).toISOString().split('T')[0] }
 
-        if (!isEdit) {
+        if (!editId || editId < 1) {
             formData['id'] = Date.now().toString();
             var emailExist = employee.find(employee => employee.email == email);
             var numberExist = employee.find(employee => employee.mobileNumber == parseInt(mobileNumber));
@@ -75,7 +74,7 @@ const Employee = () => {
             return toast.error("Number already exist..!!");
         }
 
-        if (isEdit) {
+        if (editId && editId > 0) {
             dispatch({ type: "UPDATE_EMPLOYEE", payload: formData });
             toast.success("Employee Updated");
         } else {
@@ -98,7 +97,6 @@ const Employee = () => {
             return elem.id === id
         });
 
-        setIsEdit(true)
         if (getEmployee) {
             setFname(getEmployee.fname);
             setLname(getEmployee.lname);
@@ -111,7 +109,7 @@ const Employee = () => {
     return (
         <>
             <div className="container">
-                <h1 className="text-center"> {isEdit ? "Update" : "Add"}  Employee</h1>
+                <h1 className="text-center"> {editId ? "Update" : "Add"}  Employee</h1>
 
                 <form className="row g-3" onSubmit={handleSubmit}>
                     <div className="col-md-6">
@@ -135,7 +133,7 @@ const Employee = () => {
                         <DatePicker required={true} placeholderText="Select DOB" dateFormat="yyyy-MM-dd" showYearDropdown={true} showMonthDropdown={true} maxDate={Date.now()} className="form-control" selected={dob} onChange={(date) => setDob(date)} />
                     </div>
                     <div className="col-12">
-                        <button type="submit" className="btn btn-primary"> {isEdit ? "Update" : "Add"} employee</button>
+                        <button type="submit" className="btn btn-primary"> {editId ? "Update" : "Add"} employee</button>
                         <button type="button" onClick={resetForm} className="btn btn-info float-end"> Reset</button>
                     </div>
                 </form>
